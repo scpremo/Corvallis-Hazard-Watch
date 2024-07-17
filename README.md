@@ -6,7 +6,7 @@ Lengthier project documentation is located in the "docs" folder where you can fi
 
 ### Public Hosting
 The Hazard Watch Website is currently publicly hosted using Google Cloud Web Hosting Servicies through the following link, 
-https://praxis-works-422517-c2.uw.r.appspot.com/
+https://praxis-works-422517-c2.uw.r.appspot.com/](https://scpremo.github.io/Corvallis-Hazard-Watch/
 
 #### Deploy to the server
 In order to deploy to the server remove these three commands in the package.json file
