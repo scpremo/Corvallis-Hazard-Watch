@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/Corvallis-Hazard-Watch/',
   plugins: [react()],
   build: {
     chunkSizeWarningLimit: 500, // Set the chunk size warning limit

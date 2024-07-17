@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const FileLocation = "/api/hazardIcons.json";
+const FileLocation = "/Corvallis-Hazard-Watch/api/hazardIcons.json";
 
 export const fetchIcons = createAsyncThunk('store/fetchIcons', async () => {
   try {
