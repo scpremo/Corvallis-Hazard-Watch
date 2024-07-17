@@ -1,8 +1,8 @@
 [
     {
         "id" : 100,
-        "iconUrl": "/assets/icons/marker-icon.png",
-        "shadowUrl": "/assets/icons/marker-shadow.png",
+        "iconUrl": "/Corvallis-Hazard-Watch/assets/icons/marker-icon.png",
+        "shadowUrl": "/Corvallis-Hazard-Watch/assets/icons/marker-shadow.png",
         "iconSize": [
             25,
             41
