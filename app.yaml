@@ -1,1 +1,4 @@
 runtime: nodejs20
+env_variables:
+  SUPABASE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhrbnJibWZpaHd3YWVwd2hmaGJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjEyNDA2OTAsImV4cCI6MjAzNjgxNjY5MH0.pgIz0EqpbQFXXLlu5m-8ejB8Q6jjXYv1V2uqBTY3HpA"
+  OPEN_WEATHER_KEY: "bed1848ba67a4ff12b0e3c2f5c0421fe"

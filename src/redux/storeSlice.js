@@ -1,17 +1,27 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createClient } from '@supabase/supabase-js';
+import { createAsyncThunk,createSlice } from '@reduxjs/toolkit';
 
-const FileLocation = "/api/hazards";
+const supabaseUrl = 'https://hknrbmfihwwaepwhfhbi.supabase.co';
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhrbnJibWZpaHd3YWVwd2hmaGJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjEyNDA2OTAsImV4cCI6MjAzNjgxNjY5MH0.pgIz0EqpbQFXXLlu5m-8ejB8Q6jjXYv1V2uqBTY3HpA";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const fetchData = createAsyncThunk('store/fetchData', async () => {
   try {
-    const response = await fetch(FileLocation);
-    const data = await response.json();
-    return { data: data.data, fetchedAt: Date.now() }; // Include the fetchedAt timestamp
+    const { data, error } = await supabase.from('hazards').select('*');
+    
+    if (error) {
+      throw error;
+    }
+
+    console.log(data); // Log fetched data
+
+    return { data, fetchedAt: Date.now() };
   } catch (error) {
-    // console.error('Error fetching data:', error);
-    throw error;
+    console.error('Error fetching data:', error);
+    throw error; // Re-throw the error to handle it in the thunk
   }
 });
+
 
 const storeSlice = createSlice({
   name: "items",

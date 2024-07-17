@@ -2,7 +2,7 @@ import Hazard from './hazard'; // Import Hazard if it's in a separate module
 
 //This is an array list object
 export default class Control {
-    constructor(hazardList, map, haztypes, api, icons,sensors) {
+    constructor(hazardList, map, haztypes, api, icons,) {
         this.hazardList = hazardList
         this.icons = icons
         this.hazTypes = haztypes
@@ -13,7 +13,6 @@ export default class Control {
         this.groupedContainer = new Array() //structure [location, [hazards]]
         var temp = this.size;
         this.api = api
-        this.sensors = sensors
         this.container;
         this.map = map;
         if (this.size < 50) {
@@ -30,19 +29,7 @@ export default class Control {
             this.insert(hazard);
         }
         //deep copies from sensor data and inserts it into the table
-        this.sensors.forEach(Element =>{
-            if (Element.sensor_status===1)
-            {
-                let sensor = JSON.parse(JSON.stringify(Element));
-                console.log("sensor reported")
-                sensor.created_at = new Date(sensor.last_updated)
-                sensor.radius = 50;
-                sensor.type=1
-                sensor.radius = 50;
-                sensor.text="automated flood report"
-                this.insert(sensor)
-            }
-        })
+        
         this.currentDate = new Date()
     }
     //inserts a hazard into the list
@@ -68,7 +55,7 @@ export default class Control {
 
     }
     //replaces the data with new data then filters itself
-    update(newhazardList, start, end, hazards, sensors) {
+    update(newhazardList, start, end, hazards) {
         this.removeAll()
         this.container = new Array(2 * newhazardList.length)
         let temp = newhazardList.length
@@ -79,17 +66,7 @@ export default class Control {
             hazard.created_at = new Date(hazard.created_at);
             this.insert(hazard);
         }
-        sensors.forEach(Element =>{
-            if (Element.sensor_status===1)
-            {
-                let sensor = JSON.parse(JSON.stringify(Element));
-                sensor.created_at = new Date(sensor.last_updated)
-                sensor.type=1
-                sensor.radius = 50;
-                sensor.text = "automated flood report";
-                this.insert(sensor)
-            }
-        })
+       
         //console.log(this.container)
         this.filter(start, end, hazards)
 

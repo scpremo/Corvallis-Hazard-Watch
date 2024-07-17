@@ -3,7 +3,6 @@
   // import hazardTypes from "./hazardTypes.json"
   import { useDispatch,useSelector } from 'react-redux';
   import { selectStore } from '../redux/storeSlice';
-  import { selectSensor } from '../redux/sensorSlice';
   import DataItem from './DataItem';
   import styled from "@emotion/styled";
   import { selectHazTypes } from '../redux/hazTypesRedux';
@@ -13,7 +12,6 @@
 
   const DataView = () => {
       const hazards = useSelector(selectStore);
-      const sesnors = useSelector(selectSensor)
       const [hazardsData, setHazardsData] = useState([])
       const hazardTypes = useSelector(selectHazTypes)
       const currentDate = new Date();
@@ -76,16 +74,7 @@
     // this will initiallize the data for the table
       useEffect(() =>{
         const updatedHazards = []
-          sesnors.forEach(Element => {
-            if(Element.sensor_status==1){
-            let sensor = JSON.parse(JSON.stringify(Element));
-            sensor.created_at = new Date(sensor.last_updated)
-            sensor.type=1
-            sensor.radius = 50;
-            sensor.description = "automated flood report"
-            updatedHazards.push(sensor)
-            }
-          })
+          
           hazards.forEach(Element => {
             updatedHazards.push(JSON.parse(JSON.stringify(Element)))
           })
@@ -94,7 +83,7 @@
           });
           setHazardsData(updatedHazards)
           
-      },[hazards,sesnors])
+      },[hazards])
       // filters bassed off of date, type and location
       const filter = (minDate,maxDate,type, hazardsFilter,searchString) =>{
           // viewAll()

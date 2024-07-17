@@ -7,7 +7,7 @@ import { css } from '@emotion/react';
 // import hazardTypes from "./hazardTypes.json"
 import { useDispatch, useSelector } from 'react-redux';
 import { selectStore, selectFetchedAt, fetchData } from '../redux/storeSlice';
-import { selectSensor, fetchSensor } from '../redux/sensorSlice';
+// import { selectSensor, fetchSensor } from '../redux/sensorSlice';
 import { selectHazTypes } from '../redux/hazTypesRedux';
 import { selectIcons } from '../redux/iconSlice';
 import Control from './hazardControl';
@@ -19,7 +19,11 @@ import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import badWordsFilter from 'bad-words'
 
+import { createClient } from '@supabase/supabase-js';
 
+const supabaseUrl = 'https://hknrbmfihwwaepwhfhbi.supabase.co';
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhrbnJibWZpaHd3YWVwd2hmaGJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjEyNDA2OTAsImV4cCI6MjAzNjgxNjY5MH0.pgIz0EqpbQFXXLlu5m-8ejB8Q6jjXYv1V2uqBTY3HpA";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 
 
@@ -45,14 +49,14 @@ const MapPage = () => {
   const hazards = useSelector(selectStore)
   const hazardTypes = useSelector(selectHazTypes)
   const icons = useSelector(selectIcons)
-  const sesnors = useSelector(selectSensor)
+  // const sesnors = useSelector(selectSensor)
   //console.log("hazards" , hazards)
   //console.log("hazardTypes" , hazardTypes)
   //console.log("icons" , icons)
 
   const [controller, setController] = useState(null)
   const dispatch = useDispatch(); // Move useDispatch() outside of the component body
-  const apiKey = process.env.OPEN_WEATHER_KEY
+  const apiKey = "bed1848ba67a4ff12b0e3c2f5c0421fe"//process.env.OPEN_WEATHER_KEY
   const { lat, lon, time } = useParams();
   const [grouped, setGrouped] = useState(false)
   const [update, setUpdate] = useState()
@@ -274,37 +278,30 @@ const MapPage = () => {
     // adds the hazard itno local data
     dispatch(add(hazard))
     //adds hazard into db
-    fetch('./api/addHazard', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(hazard),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+    try {
+        const { data, error } = await supabase
+            .from('hazards')
+            .insert([
+                { type: hazard.type, latitude: hazard.latitude, longitude: hazard.longitude, text: hazard.text, radius: hazard.radius, location: hazard.location},
+            ])
+            .select()
+
+        if (error) {
+            throw error;
         }
-        return response.json();
-      })
-      .then(data => {
-        // //////console.log('Server response:', data);
-        // Handle the response data as needed
-      })
-      .catch(error => {
-        console.error('Error:', error.message);
-        // Handle errors
-      });
+    } catch (error) {
+        console.error(error);
+    }
 
   }
 
   // Define the onMapClick function
   const onMapClick = (e) => {
 
-    if (!isAuthenticated) {
-      alert('You need to be signed in to post a hazard');
-      return;
-    } else {
+    // if (!isAuthenticated) {
+    //   alert('You need to be signed in to post a hazard');
+    //   return;
+    // } else {
       const randomNum = Math.floor(Math.random() * 100000000) + 1;
       var popupContent = `
                       <div>
@@ -354,12 +351,12 @@ const MapPage = () => {
       document.getElementById(`submitButton${randomNum}`).addEventListener('click', () =>
         submitData(e.latlng.lat, e.latlng.lng, document.getElementById(`hazard${randomNum}`).value, new Date(), getHazardType(randomNum), getRadius(randomNum), document.getElementById(`textInput${randomNum}`).value, popup, randomNum)
       );
-    }
+    // }
 
   }
   // gets the data from redux store
   const getData = async () => {
-    dispatch(fetchSensor())
+    // dispatch(fetchSensor())
     dispatch(fetchData())
     setUpdate(true)
   }
@@ -374,11 +371,11 @@ const MapPage = () => {
       if (hazardsTypes.length === 0) {
         hazardsTypes = "All";
       }
-      controller.update(hazards, start, end, hazardsTypes, sesnors)
+      controller.update(hazards, start, end, hazardsTypes)
       setLength(hazards.length)
       setUpdate(null)
     }
-  }, [hazards, sesnors, update])
+  }, [hazards, update])
   //when the page loads, it will run this code to initialize the map
   useEffect(() => {
     // Function to initialize the map
@@ -417,7 +414,7 @@ const MapPage = () => {
   }, [hazards]); // dependent on the hazards array
   //adds tile layer to the map and creates the control object that runs the map
   useEffect(() => {
-    if (map && !setUpOnce && sesnors) {
+    if (map && !setUpOnce) {
       setSetUpOnce(false)
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -425,13 +422,13 @@ const MapPage = () => {
       }).addTo(map);
       mapRef.current = map;
 
-      const controller = new Control(hazards, map, hazardTypes, apiKey, icons, sesnors)
+      const controller = new Control(hazards, map, hazardTypes, apiKey, icons)
       setLength(hazards.length)
       setController(controller)
       if (isNaN(parseFloat(lat)))
         getUserLocation()
     }
-  }, [map, setUpOnce, sesnors])//dependent on map and sesnors variables updating for this to be called
+  }, [map, setUpOnce])//dependent on map and sesnors variables updating for this to be called
 
   //sets up the map functions and initial filter
   useEffect(() => {

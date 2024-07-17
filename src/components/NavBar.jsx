@@ -36,7 +36,7 @@ const NavBar = () => {
             <li>
               <StyledLink to="/about" title="About">About</StyledLink>
             </li>
-            {!isAuthenticated && (      
+            {/* {!isAuthenticated && (      
               <ButtonLink onClick={() => loginWithRedirect()}>
                 Log in
               </ButtonLink>      
@@ -48,7 +48,7 @@ const NavBar = () => {
                   Logout
                 </ButtonLink>
               </>      
-            )}
+            )} */}
         </ul>
     </Nav>
   );
