@@ -25,16 +25,16 @@ const NavBar = () => {
     <Nav>
         <ul className="links">
             <li className="start">
-                  <StyledLink to="/" title="Home">Home</StyledLink>
+                  <StyledLink to="/Corvallis-Hazard-Watch/" title="Home">Home</StyledLink>
             </li>
             <li>
-              <StyledLink to="/map" title="Map">Map</StyledLink>
+              <StyledLink to="/Corvallis-Hazard-Watch/map" title="Map">Map</StyledLink>
             </li>
             <li>
-              <StyledLink to="/dataView" className="dataView">DataView</StyledLink>
+              <StyledLink to="/Corvallis-Hazard-Watch/dataView" className="dataView">DataView</StyledLink>
             </li>
             <li>
-              <StyledLink to="/about" title="About">About</StyledLink>
+              <StyledLink to="/Corvallis-Hazard-Watch/about" title="About">About</StyledLink>
             </li>
             {/* {!isAuthenticated && (      
               <ButtonLink onClick={() => loginWithRedirect()}>

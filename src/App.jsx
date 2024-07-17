@@ -68,7 +68,7 @@ const App = () => {
     <Router>  
         <GlobalStyle/>
         <Header>
-          <Link to="/">
+          <Link to="/Corvallis-Hazard-Watch/">
             <LogoMini src={hazardlogo} alt="Hazard Logo" />
           </Link>          
           <NavBar />
@@ -77,11 +77,11 @@ const App = () => {
 
   <main style={{ marginTop: '100px' }}>
       <Routes>
-        <Route path ="/" element={<Home/>}></Route>
-        <Route path="/map" element={<MapPage />} />
-        <Route path="/map/:lat/:lon/:time" element = {<MapPage />}/>
-        <Route path="/dataView" element={<DataView/>}/>
-        <Route path="/about" element={<About />} />
+        <Route path ="/Corvallis-Hazard-Watch/" element={<Home/>}></Route>
+        <Route path="/Corvallis-Hazard-Watch/map" element={<MapPage />} />
+        <Route path="/Corvallis-Hazard-Watch/map/:lat/:lon/:time" element = {<MapPage />}/>
+        <Route path="/Corvallis-Hazard-Watch/dataView" element={<DataView/>}/>
+        <Route path="/Corvallis-Hazard-Watch/about" element={<About />} />
       </Routes>
     
     </main>
