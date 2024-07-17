@@ -7,13 +7,8 @@ Lengthier project documentation is located in the "docs" folder where you can fi
 ### Public Hosting
 The Hazard Watch Website is currently publicly hosted using Google Cloud Web Hosting Servicies through the following link, 
 https://scpremo.github.io/Corvallis-Hazard-Watch/
+github pages sometimes doesnt fully load it so you mgiht need to refresh once
 
-#### Deploy to the server
-In order to deploy to the server remove these three commands in the package.json file
-
-"build": "vite build",
-"build1": "npm run build",
-"prestart": "npm run build1"
 
 #### Posting Hazards
 To post a hazard the user must be logged in and authenticated on the website. Login/authentication services are hosted using Auth0 which provides handling for login/logout/authentication and signup features.
