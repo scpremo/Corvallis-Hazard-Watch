@@ -207,8 +207,8 @@ export default class Control {
                         if(item[2]!=="loc")
                         {
                             var standardIcon = L.icon({
-                                iconUrl: '/assets/icons/marker-icon.png',
-                                shadowUrl: '/assets/icons/marker-shadow.png',
+                                iconUrl: '/Corvallis-Hazard-Watch/assets/icons/marker-icon.png',
+                                shadowUrl: '/Corvallis-Hazard-Watch/assets/icons/marker-shadow.png',
 
                                 iconSize: [25, 41], // size of the icon
                                 shadowSize: [41, 41], // size of the shadow
